@@ -1,0 +1,60 @@
+unmanaged implementation in class cl_rfm_st_pickuporder unique;
+
+define behavior for I_StorePickupOrderTP //alias <alias_name>
+//late numbering
+lock master
+//etag master <field_name>
+{
+  create;
+  update;
+  delete;
+/* Actions */
+//  action Process_Handover result [1] $self;
+  action ProcessOrderHandover result [1] $self;
+
+//  static action Process_ReservationHandover parameter D_StoreResrvationHandoverP result [1] $self;
+  static action ProcessResvnOrderHndovr parameter D_StoreResrvationHandoverP result [1] $self;
+
+//  static action Process_OrderCancellation   parameter D_StoreCancelOrderP  result [1] $self;
+  static action ProcessStoreOrderCancellation   parameter D_StoreCancelOrderP  result [1] $self;
+
+
+
+  association _StorePickupOrdPickedItem { create; }
+  association _StorePickupOrdPickingReq { create; }
+  association _StorePickupOrdExcptnItem { create; }
+}
+
+define behavior for I_StorePickupOrderPickedItemTP //alias <alias_name>
+//late numbering
+//lock dependent by <association>
+//etag master <field_name>
+{
+  create;
+  update;
+  delete;
+//  field ( readonly ) ProductImageURL;
+}
+
+define behavior for I_StorePickupOrderPickReqTP //alias <alias_name>
+//late numbering
+//lock dependent by <association>
+//etag master <field_name>
+{
+  create;
+  update;
+  delete;
+
+}
+
+define behavior for I_StorePickupOrdExcptnItemTP //alias <alias_name>
+//late numbering
+//lock dependent by <association>
+//etag master <field_name>
+{
+  create;
+  update;
+  delete;
+  field ( readonly ) ProductImageURL;
+  static action CancelSubstitutedProduct    parameter D_StoreCancSubstitutedProdP  result [1] $self;
+}

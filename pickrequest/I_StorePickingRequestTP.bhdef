@@ -1,0 +1,30 @@
+unmanaged implementation in class cl_rfm_st_picking_request unique;
+
+define behavior for I_StorePickingRequestTP //alias <alias_name>
+//late numbering
+lock master
+//etag master <field_name>
+{
+  create;
+  update;
+  delete;
+  action TakeOverPickingRequests;
+  action ReleasePickingRequests;
+  action TransferPickingRequests       parameter D_StorePickingRequestReassignP;
+  action PrintPickingReqContent        parameter D_StoreStartPrintingP;
+  action ProcessProdWithAlternateUoM   parameter D_ProcessProdWithAlternateUoMP result [1] D_ProcessProdWithAlternateUoMP;
+  association _Items { create; }
+}
+
+define behavior for I_StorePickingRequestItemTP //alias <alias_name>
+//late numbering
+//lock dependent by _Request
+//etag master <field_name>
+{
+  create;
+  update;
+  delete;
+  //  association _Request;
+  // field ( readonly:update ) StorePickingRequest;
+  // field ( readonly:update ) Store;
+}
